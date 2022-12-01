@@ -1,4 +1,5 @@
 class Student:
+    # students_list = []
     def __init__(self, name, surname, gender):
         self.name = name
         self.surname = surname
@@ -18,7 +19,7 @@ class Student:
 
     def average_score(self):
         average = sum(*self.grades.values())/len(*self.grades.values())
-        return average
+        return round(average, 2)
 
     def __str__(self):
         res = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_score()}\
@@ -39,6 +40,10 @@ class Student:
         else:
             return "Ошибка"
 
+    # def add_student(self):
+        # super().__init__()
+        # Student.students_list.append(self)
+
         
 class Mentor:
     def __init__(self, name, surname):
@@ -55,7 +60,7 @@ class Lecturer(Mentor):
 
     def average_score(self):
         average = sum(*self.grades.values())/len(*self.grades.values())
-        return average
+        return round(average, 2)
 
     def __str__(self):
         res = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_score()}"
@@ -89,33 +94,70 @@ class Reviewer(Mentor):
         res = f"Имя: {self.name}\nФамилия: {self.surname}"
         return res
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python', 'PHP']
-best_student.finished_courses += ['JAVA']
+student1 = Student('Ruoy', 'Eman', 'male')
+student1.courses_in_progress += ['Python', 'PHP']
+student1.finished_courses += ['JAVA']
 
-another_student = Student('Nick', 'White', 'male')
-another_student.courses_in_progress += ['Python']
+student2 = Student('Nick', 'White', 'male')
+student2.courses_in_progress += ['Python', 'C#']
 
-cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += ['Python']
+student3 = Student('Susan', 'Mcdonald', 'female')
+student3.courses_in_progress += ['Python', 'C++']
 
-great_lecturer = Lecturer('Mike', 'Rashford')
-great_lecturer.courses_attached += ['Python']
+main_reviewer = Reviewer('George', 'Simons')
+main_reviewer.courses_attached += ['Python']
 
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 8)
-cool_reviewer.rate_hw(best_student, 'Python', 9)
-best_student.rate_lecturer(great_lecturer, 'Python', 10)
-another_student.rate_lecturer(great_lecturer, 'Python', 5)
+lecturer1 = Lecturer('Mike', 'Rashford')
+lecturer1.courses_attached += ['Python']
 
-print(best_student.grades)
-print(great_lecturer.grades)
+lecturer2 = Lecturer('Robert', 'Rodgers')
+lecturer2.courses_attached += ['Python']
 
-print(cool_reviewer)
+lecturer3 = Lecturer('John', 'Dilan')
+lecturer3.courses_attached += ['Python']
+
+
+main_reviewer.rate_hw(student1, 'Python', 10)
+main_reviewer.rate_hw(student1, 'Python', 8)
+main_reviewer.rate_hw(student1, 'Python', 9)
+main_reviewer.rate_hw(student2, 'Python', 6)
+main_reviewer.rate_hw(student2, 'Python', 6)
+main_reviewer.rate_hw(student2, 'Python', 6)
+main_reviewer.rate_hw(student3, 'Python', 5)
+main_reviewer.rate_hw(student3, 'Python', 10)
+main_reviewer.rate_hw(student3, 'Python', 5)
+
+student1.rate_lecturer(lecturer1, 'Python', 10)
+student2.rate_lecturer(lecturer1, 'Python', 9)
+student3.rate_lecturer(lecturer1, 'Python', 7)
+student1.rate_lecturer(lecturer2, 'Python', 8)
+student2.rate_lecturer(lecturer2, 'Python', 5)
+student3.rate_lecturer(lecturer2, 'Python', 7)
+student1.rate_lecturer(lecturer3, 'Python', 8)
+student2.rate_lecturer(lecturer3, 'Python', 5)
+student3.rate_lecturer(lecturer3, 'Python', 7)
+
+print(student1.grades)
+print(lecturer1.grades)
+
+print(main_reviewer)
 print()
-print(great_lecturer)
+print(lecturer1)
 print()
-print(best_student)
+print(student1)
 
-print(best_student.comparison_students())
-print(great_lecturer.comparison_lecturers())
+print(student1.comparison_students())
+print(lecturer1.comparison_lecturers())
+
+
+# student1.add_student
+# student2.add_student
+# student3.add_student
+
+# print(Student.students_list)
+
+# Не понял как выполнить 4 задание:
+# 1) как добавить экземпляр класса в список?
+# 2) если даже я добавлю экземпляр класса в список, то зачем нам три параметра(имя, фамилия, пол).
+# 3) также нам нужно еще добавить только нужных студентов по определенному курсу..
+# Я что-то совсем запутался в этом задании... 
