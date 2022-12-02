@@ -1,5 +1,4 @@
 class Student:
-    # students_list = []
     def __init__(self, name, surname, gender):
         self.name = name
         self.surname = surname
@@ -7,7 +6,7 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
-
+        
     def rate_lecturer(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached:
             if course in lecturer.grades:
@@ -18,12 +17,14 @@ class Student:
             return 'Ошибка'
 
     def average_score(self):
-        average = sum(*self.grades.values())/len(*self.grades.values())
+        res = [j for i in [self.grades.values()] for j in i]
+        a = [j for i in res for j in i]
+        average = sum(map(sum, self.grades.values()))/len(a)
         return round(average, 2)
 
     def __str__(self):
         res = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_score()}\
-            \nКурсы в процессе изучения: {''.join(self.courses_in_progress)}\nЗавершенные курсы: {''.join(self.finished_courses)}"
+            \nКурсы в процессе изучения: {','.join(self.courses_in_progress)}\nЗавершенные курсы: {','.join(self.finished_courses)}"
         return res
     
     def __lt__(self, other):
@@ -32,11 +33,6 @@ class Student:
             return
         return self.average_score() < other.average_score()
 
-    # def add_student(self):
-        # super().__init__()
-        # Student.students_list.append(self)
-
-        
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -51,7 +47,9 @@ class Lecturer(Mentor):
         self.courses_attached = []
 
     def average_score(self):
-        average = sum(*self.grades.values())/len(*self.grades.values())
+        res = [j for i in [self.grades.values()] for j in i]
+        a = [j for i in res for j in i]
+        average = sum(map(sum, self.grades.values()))/len(a)
         return round(average, 2)
 
     def __str__(self):
@@ -79,7 +77,8 @@ class Reviewer(Mentor):
         return res
 
 student1 = Student('Ruoy', 'Eman', 'male')
-student1.courses_in_progress += ['Python', 'PHP']
+student1.courses_in_progress += ['Python']
+student1.courses_in_progress += ['PHP']
 student1.finished_courses += ['JAVA']
 
 student2 = Student('Nick', 'White', 'male')
@@ -90,9 +89,11 @@ student3.courses_in_progress += ['Python', 'C++']
 
 main_reviewer = Reviewer('George', 'Simons')
 main_reviewer.courses_attached += ['Python']
+main_reviewer.courses_attached += ['PHP']
 
 lecturer1 = Lecturer('Mike', 'Rashford')
 lecturer1.courses_attached += ['Python']
+lecturer1.courses_attached += ['PHP']
 
 lecturer2 = Lecturer('Robert', 'Rodgers')
 lecturer2.courses_attached += ['Python']
@@ -104,6 +105,9 @@ lecturer3.courses_attached += ['Python']
 main_reviewer.rate_hw(student1, 'Python', 10)
 main_reviewer.rate_hw(student1, 'Python', 8)
 main_reviewer.rate_hw(student1, 'Python', 9)
+main_reviewer.rate_hw(student1, 'PHP', 7)
+main_reviewer.rate_hw(student1, 'PHP', 8)
+main_reviewer.rate_hw(student1, 'PHP', 8)
 main_reviewer.rate_hw(student2, 'Python', 6)
 main_reviewer.rate_hw(student2, 'Python', 6)
 main_reviewer.rate_hw(student2, 'Python', 6)
@@ -119,29 +123,31 @@ student2.rate_lecturer(lecturer2, 'Python', 5)
 student3.rate_lecturer(lecturer2, 'Python', 7)
 student1.rate_lecturer(lecturer3, 'Python', 8)
 student2.rate_lecturer(lecturer3, 'Python', 5)
-student3.rate_lecturer(lecturer3, 'Python', 7)
+student3.rate_lecturer(lecturer3, 'Python', 6)
 
 print(student1.grades)
 print(lecturer1.grades)
 
 print(main_reviewer)
 print()
-print(lecturer1)
+print(lecturer3)
 print()
 print(student1)
 
 print(student1 > student2)
 print(lecturer1 < lecturer2)
 
+print(student1.__dict__)
+print(student2.__dict__)
+print(student3.__dict__)
 
-# student1.add_student
-# student2.add_student
-# student3.add_student
+# list_of_students = []
 
-# print(Student.students_list)
+# list_of_students.append(student1)
+# list_of_students.append(student2)
+# list_of_students.append(student3)
 
-# Не понял как выполнить 4 задание:
-# 1) как добавить экземпляр класса в список?
-# 2) если даже я добавлю экземпляр класса в список, то зачем нам три параметра(имя, фамилия, пол).
-# 3) также нам нужно еще добавить только нужных студентов по определенному курсу..
-# Я что-то совсем запутался в этом задании... 
+# # for student, grades in student1.items():
+# #     for grade in grades:
+# #         print(grade)
+
