@@ -25,20 +25,12 @@ class Student:
         res = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_score()}\
             \nКурсы в процессе изучения: {''.join(self.courses_in_progress)}\nЗавершенные курсы: {''.join(self.finished_courses)}"
         return res
-
-    def comparison_students(self):
-        if self.average_score() > 8:
-            return "Отличная успеваемость"
-        if self.average_score() < 9:
-            return "Хорошая успеваемость"
-        if self.average_score() < 7:
-            return "Средняя успеваемость"
-        if self.average_score() < 4:
-            return "Плохая успеваемость"
-        if self.average_score() < 2:
-            return "Отчислить"
-        else:
-            return "Ошибка"
+    
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            print("Студент не найден")
+            return
+        return self.average_score() < other.average_score()
 
     # def add_student(self):
         # super().__init__()
@@ -66,19 +58,11 @@ class Lecturer(Mentor):
         res = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average_score()}"
         return res
 
-    def comparison_lecturers(self):
-        if self.average_score() > 8:
-            return "Отличный результат"
-        if self.average_score() < 9:
-            return "Хороший результат"
-        if self.average_score() < 7:
-            return "Средний результат"
-        if self.average_score() < 4:
-            return "Плохой результат"
-        if self.average_score() < 2:
-            return "Уволить :)"
-        else:
-            return "Ошибка"
+    def __lt__(self, other):
+        if not isinstance(other, Lecturer):
+            print("Лектор не найден")
+            return
+        return self.average_score() < other.average_score()
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
@@ -146,8 +130,8 @@ print(lecturer1)
 print()
 print(student1)
 
-print(student1.comparison_students())
-print(lecturer1.comparison_lecturers())
+print(student1 > student2)
+print(lecturer1 < lecturer2)
 
 
 # student1.add_student
